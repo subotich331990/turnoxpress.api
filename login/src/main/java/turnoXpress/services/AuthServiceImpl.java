@@ -13,9 +13,9 @@ public class AuthServiceImpl implements AuthService {
     @Autowired
     private UserRepository userRepository;
     public boolean autenticar(Long id, String password) {
-        User user = userRepository.findByid(id);
+        Optional<User> user = userRepository.findById(id);
 
         // Verificar si el usuario existe y la contraseña es correcta
-        return user != null && user.getPassword().equals(password);
+        return user != null && user.getClass().equals(password);
     }
 }

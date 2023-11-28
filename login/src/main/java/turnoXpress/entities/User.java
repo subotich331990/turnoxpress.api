@@ -1,9 +1,13 @@
 package turnoXpress.entities;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serial;
 import java.io.Serializable;
+
 
 @Entity
 @Table(name = "usuarios")
@@ -21,7 +25,29 @@ public class User implements Serializable {
 
     @Column(name = "password")
     private String password;
-    public User() {
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public User(Long id, String nombre, String password) {
@@ -30,29 +56,7 @@ public class User implements Serializable {
         this.password = password;
     }
 
-    public Long getId() {
-        return id;
-    }
+    public User() {
 
-    public void setId(Long id) {
-        this.id = id;
     }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String correo) {
-        this.password = correo;
-    }
-
-    // Puedes agregar otros atributos y métodos según tus necesidades.
 }

@@ -1,16 +1,18 @@
 package turnoXpress.services;
 
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import turnoXpress.entities.User;
 import turnoXpress.repositories.UserRepository;
+
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class UserService {
     @Autowired
-    private UserRepository userRepository;
+    public UserRepository userRepository;
 
     public List<User> getAllUsers() {
         return userRepository.findAll();
@@ -19,12 +21,15 @@ public class UserService {
     public Optional<User> getUserById(Long userId) {
         return userRepository.findById(userId);
     }
-
-    public void createUser(User user) {
-        // Puedes agregar validaciones u lógica de negocio aquí antes de guardar
+    @Transactional
+    public User createUser(User user) throws Exception {
+        if (user.getNombre().isEmpty()) {
+            throw new Exception("el nombre no puede estar vacio");
+        }
         userRepository.save(user);
+        return user;
     }
-
+    @Transactional
     public User updateUser(Long userId, User updatedUser) {
         // Verifica si el usuario existe antes de actualizar
         if (userRepository.existsById(userId)) {
@@ -33,7 +38,7 @@ public class UserService {
         }
         return null; // Manejo de errores: usuario no encontrado
     }
-
+    @Transactional
     public void deleteUser(Long userId) {
         userRepository.deleteById(userId);
     }
