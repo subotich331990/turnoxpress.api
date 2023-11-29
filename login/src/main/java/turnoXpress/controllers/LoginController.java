@@ -28,6 +28,7 @@ public class LoginController {
 
     @PostMapping("/register")
     public String register(User user, Model model) {
+
         try {
             userService.createUser(user);
             model.addAttribute("exito", "usuario_creado");
