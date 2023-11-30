@@ -1,16 +1,13 @@
 package turnoXpress.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.io.Serial;
 import java.io.Serializable;
 
 
 @Entity
-@Table(name = "usuarios")
+@Table(name = "users")
 public class User implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
@@ -20,43 +17,52 @@ public class User implements Serializable {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "nombre")
-    private String nombre;
+    @Column(name = "name")
+    private String name;
 
     @Column(name = "password")
     private String password;
 
-    public Long getId() {
-        return id;
+    @Column(name = "active")
+    private Boolean active;
+
+
+    public User(String name, String password, Boolean active) {
+        this.name = name;
+        this.password = password;
+        this.active = active;
     }
 
-    public String getNombre() {
-        return nombre;
+    public User() {
+        this.active = true;
     }
-
-    public String getPassword() {
-        return password;
-    }
-
     public void setId(Long id) {
         this.id = id;
     }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void setPassword(String password) {
         this.password = password;
     }
 
-    public User(Long id, String nombre, String password) {
-        this.id = id;
-        this.nombre = nombre;
-        this.password = password;
+    public void setActive(Boolean active) {
+        this.active = active;
     }
 
-    public User() {
+    public Long getId() {
+        return id;
+    }
 
+    public String getName() {
+        return name;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+    public Boolean getActive() {
+        return active;
     }
 }

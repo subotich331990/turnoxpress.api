@@ -21,7 +21,7 @@ public class LoginController {
     private UserService userService;
 
     @GetMapping("/register")
-    public String mostrarFormularioLogin(Model model) {
+    public String showRegister(Model model) {
         model.addAttribute("user", new User());
         return "/register";
     }
@@ -39,14 +39,25 @@ public class LoginController {
             return "/register";
         }
     }
+    @GetMapping("/delete")
+    public String showDelete(Model model) {
+        model.addAttribute("user", new User());
+        return "/delete";
+    }
 
+    @PostMapping("/delete")
+    public String delete(User user, Model model) {
 
-    /* @PostMapping("/register")
-    public void procesarFormularioRegister(@RequestParam Long id, @RequestParam String password) {
-        if (authService.autenticar(id, password)) {
-            return "redirect:/inicio";
-        } else {
-            return "redirect:/register?error";
+        try {
+            userService.switchUser(user.getId());
+            model.addAttribute("exito", "usuario_creado");
+            return "/delete";
+
+        } catch (Exception e) {
+            model.addAttribute("error", "usuario_no_creado");
+            return "/delete";
         }
-    } */
+    }
+
+
 }

@@ -14,16 +14,9 @@ public class UserService {
     @Autowired
     public UserRepository userRepository;
 
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
-    }
-
-    public Optional<User> getUserById(Long userId) {
-        return userRepository.findById(userId);
-    }
     @Transactional
     public User createUser(User user) throws Exception {
-        if (user.getNombre().isEmpty()) {
+        if (user.getName().isEmpty()) {
             throw new Exception("el nombre no puede estar vacio");
         }
         userRepository.save(user);
@@ -39,9 +32,16 @@ public class UserService {
         return null; // Manejo de errores: usuario no encontrado
     }
     @Transactional
-    public void deleteUser(Long userId) {
+    public User switchUser(Long userId) {
+// Verifica si el usuario existe antes de actualizar
 
-        userRepository.deleteById(userId);
+        if (userRepository.existsById(userId)) {
+            User updatedUser = userRepository.findById(userId);
+            updatedUser.setId(userId);  // Asegura que el ID del usuario se mantenga
+            updatedUser.setActive(!updatedUser.getActive());
+            return userRepository.save(updatedUser);
+        }
+        return null; // Manejo de errores: usuario no encontrado
     }
 }
 
