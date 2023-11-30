@@ -34,9 +34,10 @@ public class UserService {
     @Transactional
     public User switchUser(Long userId) {
 // Verifica si el usuario existe antes de actualizar
+            Optional<User> optionalUser = userRepository.findById(userId);
 
-        if (userRepository.existsById(userId)) {
-            User updatedUser = userRepository.findById(userId);
+        if (optionalUser.isPresent()) {
+            User updatedUser = optionalUser.get();
             updatedUser.setId(userId);  // Asegura que el ID del usuario se mantenga
             updatedUser.setActive(!updatedUser.getActive());
             return userRepository.save(updatedUser);
