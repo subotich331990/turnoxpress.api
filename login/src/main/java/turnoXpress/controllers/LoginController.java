@@ -50,11 +50,11 @@ public class LoginController {
 
         try {
             userService.switchUser(user.getId());
-            model.addAttribute("exito", "usuario_creado");
+            model.addAttribute("exito", "user_deleted");
             return "/delete";
 
         } catch (Exception e) {
-            model.addAttribute("error", "usuario_no_creado");
+            model.addAttribute("error", "user_not_found");
             return "/delete";
         }
     }
