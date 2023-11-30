@@ -23,7 +23,7 @@ public class LoginController {
     @GetMapping("/register")
     public String mostrarFormularioLogin(Model model) {
         model.addAttribute("user", new User());
-        return "register";
+        return "/register";
     }
 
     @PostMapping("/register")
