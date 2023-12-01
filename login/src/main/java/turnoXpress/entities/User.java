@@ -27,10 +27,10 @@ public class User implements Serializable {
     private Boolean active;
 
 
-    public User(String name, String password, Boolean active) {
+    public User(String name, String password) {
         this.name = name;
         this.password = password;
-        this.active = active;
+        this.active = true;
     }
 
     public User() {
