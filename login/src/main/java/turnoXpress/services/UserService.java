@@ -23,6 +23,30 @@ public class UserService {
         userRepository.save(user);
         return user;
     }
+
+    public User updateUser(Long userId, User updatedUser) throws Exception {
+            // Verifica si el usuario existe antes de actualizar
+            if (!userRepository.existsById(userId)) {
+                throw new Exception("El usuario no existe");
+            } else {
+                updatedUser.setId(userId);  // Asegura que el ID del usuario se mantenga
+                return userRepository.save(updatedUser);}
+    }
+    @Transactional
+    public User switchUser(Long userId) throws Exception {
+        // Verifica si el usuario existe antes de actualizar
+            Optional<User> optionalUser = userRepository.findById(userId);
+
+        if (optionalUser.isPresent()) {
+            User updatedUser = optionalUser.get();
+            updatedUser.setId(userId);  // Asegura que el ID del usuario se mantenga
+            updatedUser.setActive(!updatedUser.getActive());
+            return userRepository.save(updatedUser);
+        }
+        throw new Exception("no se pudo actualizar"); // Manejo de errores: usuario no encontrado
+    }
+}
+
     /*
     @Transactional
      public User updateUser(Long userId, User updatedUser) {
@@ -33,34 +57,3 @@ public class UserService {
         }
         return null; // Manejo de errores: usuario no encontrado
     } */
-
-    public User updateUser(Long userId, User updatedUser) {
-        try {
-            // Verifica si el usuario existe antes de actualizar
-            if (userRepository.existsById(userId)) {
-                updatedUser.setId(userId);  // Asegura que el ID del usuario se mantenga
-                return userRepository.save(updatedUser);
-            }
-        } catch (EmptyResultDataAccessException e) {
-            // Manejo de la excepción: usuario no encontrado
-            // Puedes imprimir un mensaje de error o realizar otras acciones según tus necesidades
-            System.err.println("Error: Usuario no encontrado");
-        }
-
-        return null;
-    }
-    @Transactional
-    public User switchUser(Long userId) {
-// Verifica si el usuario existe antes de actualizar
-            Optional<User> optionalUser = userRepository.findById(userId);
-
-        if (optionalUser.isPresent()) {
-            User updatedUser = optionalUser.get();
-            updatedUser.setId(userId);  // Asegura que el ID del usuario se mantenga
-            updatedUser.setActive(!updatedUser.getActive());
-            return userRepository.save(updatedUser);
-        }
-        return null; // Manejo de errores: usuario no encontrado
-    }
-}
-
