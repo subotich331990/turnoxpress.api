@@ -2,6 +2,7 @@ package turnoXpress.services;
 
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import turnoXpress.entities.User;
 import turnoXpress.repositories.UserRepository;
@@ -22,14 +23,31 @@ public class UserService {
         userRepository.save(user);
         return user;
     }
+    /*
     @Transactional
-    public User updateUser(Long userId, User updatedUser) {
+     public User updateUser(Long userId, User updatedUser) {
         // Verifica si el usuario existe antes de actualizar
         if (userRepository.existsById(userId)) {
             updatedUser.setId(userId);  // Asegura que el ID del usuario se mantenga
             return userRepository.save(updatedUser);
         }
         return null; // Manejo de errores: usuario no encontrado
+    } */
+
+    public User updateUser(Long userId, User updatedUser) {
+        try {
+            // Verifica si el usuario existe antes de actualizar
+            if (userRepository.existsById(userId)) {
+                updatedUser.setId(userId);  // Asegura que el ID del usuario se mantenga
+                return userRepository.save(updatedUser);
+            }
+        } catch (EmptyResultDataAccessException e) {
+            // Manejo de la excepción: usuario no encontrado
+            // Puedes imprimir un mensaje de error o realizar otras acciones según tus necesidades
+            System.err.println("Error: Usuario no encontrado");
+        }
+
+        return null;
     }
     @Transactional
     public User switchUser(Long userId) {
