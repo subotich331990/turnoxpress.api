@@ -12,7 +12,7 @@ public class Appointment implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "id_user")
-    private User user;
+    private Patient patient;
 
     @ManyToOne
     @JoinColumn(name = "id_medic")
@@ -28,8 +28,8 @@ public class Appointment implements Serializable {
         // Constructor vacío necesario para JPA
     }
 
-    public Appointment(User user, Medic medic, LocalDate date, String time, String status) {
-        this.user = user;
+    public Appointment(Patient patient, Medic medic, LocalDate date, String time, String status) {
+        this.patient = patient;
         this.medic = medic;
         this.date = date;
         this.time = time;

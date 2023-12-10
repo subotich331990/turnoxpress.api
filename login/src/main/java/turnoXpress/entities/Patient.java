@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "users")
-public class User implements Serializable {
+public class Patient implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
@@ -25,14 +25,20 @@ public class User implements Serializable {
     @Column(name = "active")
     private Boolean active;
 
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
-    public User(String name, String password) {
+    public enum Role { USER, ADMIN }
+
+    public Patient(String name,String email, String password) {
+
         this.name = name;
+        this.email = email;
         this.password = password;
         this.active = true;
     }
 
-    public User() {
+    public Patient() {
         this.active = true;
     }
     public void setId(Long id) {
@@ -63,5 +69,21 @@ public class User implements Serializable {
     }
     public Boolean getActive() {
         return active;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 }

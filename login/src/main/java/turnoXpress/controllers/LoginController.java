@@ -5,7 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import turnoXpress.entities.User;
+import turnoXpress.entities.Patient;
 import turnoXpress.services.UserService;
 
 @RestController
@@ -15,17 +15,18 @@ public class LoginController {
     @Autowired
     private UserService userService;
     @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody User user) {
+    public ResponseEntity<String> register(@RequestParam String name, @RequestParam String email, @RequestParam String password) {
         try {
-            userService.createUser(user);
+            Patient patient = new Patient(name,email,password);
+            userService.createPatient(patient);
             return ResponseEntity.ok("Usuario creado exitosamente");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al crear usuario");
         }
     }
+
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestParam String email, @RequestParam String password) {
-        // Implementa la lógica de autenticación aquí (puede ser usando Spring Security)
         boolean authenticated = userService.authenticateUser(email, password);
 
         if (authenticated) {
@@ -34,6 +35,7 @@ public class LoginController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciales inválidas");
         }
     }
+
 
     @PutMapping("/{userId}")
     public ResponseEntity<String> delete(@PathVariable Long userId) {
@@ -95,6 +97,13 @@ public class LoginController {
         }
     }
 
+    */
+    /*
+    @GetMapping("/login")
+    public String showRegister(Model model) {
+        model.addAttribute("patient", new Patient());
+        return "/login";
+    }
     */
 
 
