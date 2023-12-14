@@ -9,8 +9,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import turnoXpress.dtos.LoginRequest;
+import turnoXpress.dtos.RegisterRequest;
 import turnoXpress.entities.Patient;
 import turnoXpress.repositories.UserRepository;
 
@@ -20,10 +23,10 @@ import java.util.Optional;
 
 @Service
 public class UserService implements UserDetailsService {
-
+    @Autowired
     public UserRepository userRepository;
 
-    PasswordEncoder passwordEncoder;
+
     @Autowired
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
@@ -46,7 +49,9 @@ public class UserService implements UserDetailsService {
 
 
     @Transactional
-    public void createPatient(Patient patient) throws Exception {
+    public void createPatient(RegisterRequest registerRequest) throws Exception {
+        Patient patient = new Patient(registerRequest.getName(), registerRequest.getEmail(), registerRequest.getPassword());
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(); // no la declaro como global y autowired porque tira error
         if (patient.getName().isEmpty()) {
             throw new Exception("el nombre no puede estar vacio");
         }
@@ -56,15 +61,19 @@ public class UserService implements UserDetailsService {
         if (patient.getPassword().isEmpty()) {
             throw new Exception("el nombre no puede estar vacio");
         }
+        String encriptedPass = passwordEncoder.encode(patient.getPassword());
+        patient.setPassword(encriptedPass); // antes de guardar el paciente en la base de datos encripto la pass
+     //   patient.setRole(registerRequest.getRole());
         userRepository.save(patient);
     }
     @Transactional
-    public boolean authenticateUser(String email, String password) {
+    public boolean authenticateUser(LoginRequest loginRequest) {
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(); // no la declaro como global y autowired porque tira error
         // Buscar el usuario por su dirección de correo electrónico
-        Optional<Patient> optionalPatient = userRepository.findByEmail(email);
+        Optional<Patient> optionalPatient = userRepository.findByEmail(loginRequest.getEmail());
         if(optionalPatient.isPresent()){
         Patient patient = optionalPatient.get();
-        return passwordEncoder.matches(password, patient.getPassword());
+        return passwordEncoder.matches(loginRequest.getPassword(), patient.getPassword());
         }
         // Verificar si se encontró un usuario y si las contraseñas coinciden
         return false;

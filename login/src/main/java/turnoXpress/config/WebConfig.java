@@ -9,13 +9,15 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration;
+
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import org.springframework.security.web.SecurityFilterChain;
 import turnoXpress.entities.Patient;
 
+import turnoXpress.entities.Role;
 import turnoXpress.services.UserService;
 
 @Configuration
@@ -38,13 +40,16 @@ public class WebConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
+                .csrf(config -> config.disable()) // deshabilita csrf(cross-site request forgery) que viene por defecto
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/css/**", "/js/**", "/login").permitAll()
-                        .requestMatchers("/admin").hasRole(Patient.Role.ADMIN.toString())
-                        .requestMatchers("/").hasAnyRole(
-                                Patient.Role.ADMIN.toString(), Patient.Role.USER.toString())
-                        .anyRequest().authenticated())
-                .formLogin(Customizer.withDefaults())
+                        .requestMatchers("/css/**", "/js/**", "/api/v1/login", "/api/v1/register").permitAll()
+                        .requestMatchers("/admin").hasRole(Role.ADMIN.toString())
+                     .requestMatchers("/").hasAnyRole(
+                              Role.ADMIN.toString(), Role.USER.toString())
+                       .anyRequest().authenticated()
+                        )
+               .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // no se mantiene registro de la sesion, HASTA NO TENER JWT NO SE USA :)
+              // .formLogin(Customizer.withDefaults())
                 .logout(logout -> logout
                         .deleteCookies("JSESSIONID")
                         .invalidateHttpSession(true));

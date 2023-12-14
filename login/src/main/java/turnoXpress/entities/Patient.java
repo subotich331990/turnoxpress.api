@@ -21,16 +21,12 @@ public class Patient implements Serializable {
     private String email;
     @Column(name = "password")
     private String password;
-
     @Column(name = "active")
     private Boolean active;
-
     @Enumerated(EnumType.STRING)
-    private Role role;
+    private Role role = Role.USER;
 
-    public enum Role { USER, ADMIN }
-
-    public Patient(String name,String email, String password) {
+    public Patient(String name, String email, String password) {
 
         this.name = name;
         this.email = email;
@@ -74,7 +70,6 @@ public class Patient implements Serializable {
     public String getEmail() {
         return email;
     }
-
     public void setEmail(String email) {
         this.email = email;
     }

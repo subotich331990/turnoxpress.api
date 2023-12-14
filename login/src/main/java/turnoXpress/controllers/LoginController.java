@@ -5,6 +5,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import turnoXpress.dtos.LoginRequest;
+import turnoXpress.dtos.RegisterRequest;
 import turnoXpress.entities.Patient;
 import turnoXpress.services.UserService;
 
@@ -15,22 +17,21 @@ public class LoginController {
     @Autowired
     private UserService userService;
     @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestParam String name, @RequestParam String email, @RequestParam String password) {
-        try {
-            Patient patient = new Patient(name,email,password);
-            userService.createPatient(patient);
+    public ResponseEntity<String> register(@RequestBody RegisterRequest registerRequest) throws Exception {
+            userService.createPatient(registerRequest);
             return ResponseEntity.ok("Usuario creado exitosamente");
+     /*   try {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al crear usuario");
-        }
+        } */
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestParam String email, @RequestParam String password) {
-        boolean authenticated = userService.authenticateUser(email, password);
+    public ResponseEntity<String> login(@RequestBody LoginRequest loginRequest) {
+        boolean authenticated = userService.authenticateUser(loginRequest);
 
         if (authenticated) {
-            return ResponseEntity.ok("Inicio de sesión exitoso");
+            return ResponseEntity.ok("INICIO DE SESION EXITOSO ALEJANDROO");
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciales inválidas");
         }
