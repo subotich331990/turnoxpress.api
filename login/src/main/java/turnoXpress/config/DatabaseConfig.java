@@ -14,17 +14,17 @@ public class DatabaseConfig {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
 
-        /* Configuracion para BD en la Nube
+        /* Configuracion para BD en la Nube */
         dataSource.setUrl("jdbc:mysql://umyclhuz5u6tl7e4:stxyITD7Sm4thFpUfXin@byoiwctmutmjnurpkqnz-mysql.services.clever-cloud.com:3306/byoiwctmutmjnurpkqnz");
         dataSource.setUsername("umyclhuz5u6tl7e4");
         dataSource.setPassword("stxyITD7Sm4thFpUfXin");
-         */
+         
 
-        /* Configuracion para BD local */
+        /* Configuracion para BD local
         dataSource.setUrl("jdbc:mysql://localhost:3306/turnoxpress");
         dataSource.setUsername("root");
         dataSource.setPassword("root");
-
+*/
         return dataSource;
     }
 }

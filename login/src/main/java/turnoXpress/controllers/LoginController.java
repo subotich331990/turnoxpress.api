@@ -31,7 +31,7 @@ public class LoginController {
         boolean authenticated = userService.authenticateUser(loginRequest);
 
         if (authenticated) {
-            return ResponseEntity.ok("INICIO DE SESION EXITOSO ALEJANDROO");
+            return ResponseEntity.ok("INICIO DE SESION EXITOSO");
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciales inválidas");
         }

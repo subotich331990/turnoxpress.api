@@ -48,7 +48,7 @@ public class WebConfig {
                               Role.ADMIN.toString(), Role.USER.toString())
                        .anyRequest().authenticated()
                         )
-               .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // no se mantiene registro de la sesion, HASTA NO TENER JWT NO SE USA :)
+           //    .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // no se mantiene registro de la sesion, HASTA NO TENER JWT NO SE USA :)
               // .formLogin(Customizer.withDefaults())
                 .logout(logout -> logout
                         .deleteCookies("JSESSIONID")
