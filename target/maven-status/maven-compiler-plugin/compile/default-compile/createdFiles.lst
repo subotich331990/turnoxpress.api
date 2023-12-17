@@ -1,0 +1,15 @@
+turnoXpress\entities\Appointment.class
+turnoXpress\LoginApplication.class
+turnoXpress\config\DatabaseConfig.class
+turnoXpress\services\UserService.class
+turnoXpress\dtos\LoginRequest.class
+turnoXpress\entities\Patient.class
+turnoXpress\controllers\LoginController.class
+turnoXpress\entities\Role.class
+turnoXpress\dtos\RegisterRequest.class
+turnoXpress\repositories\MedicRepository.class
+turnoXpress\config\DataLoader.class
+turnoXpress\repositories\UserRepository.class
+turnoXpress\config\WebConfig.class
+turnoXpress\entities\Medic.class
+turnoXpress\services\MedicService.class
