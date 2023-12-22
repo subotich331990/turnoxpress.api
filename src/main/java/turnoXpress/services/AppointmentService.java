@@ -22,7 +22,7 @@ public class AppointmentService {
 
     @Transactional
     public void createAppointment(AppointmentRequest appointmentRequest){
-        Appointment appointment = new Appointment(appointmentRequest.getPatient(), appointmentRequest.getMedic(), appointmentRequest.getDate(), appointmentRequest.getTime(), appointmentRequest.getStatus(), appointmentRequest.getHospital());
+        Appointment appointment = new Appointment(appointmentRequest.getSpeciality(), appointmentRequest.getMedic(), appointmentRequest.getDate(), appointmentRequest.getTime(), appointmentRequest.getStatus(), appointmentRequest.getHospital());
         appointmentRepository.save(appointment);
     }
     public ArrayList<Appointment> retriveAppointments() {

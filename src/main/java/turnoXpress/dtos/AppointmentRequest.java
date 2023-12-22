@@ -6,7 +6,7 @@ import turnoXpress.entities.Patient;
 import java.time.LocalDate;
 
 public class AppointmentRequest {
-    private String patient;
+    private String speciality;
     private String medic;
     private String date;
     private String time;
