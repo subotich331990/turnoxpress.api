@@ -1,50 +1,52 @@
 package turnoXpress.entities;
 import jakarta.persistence.*;
+
+import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDate;
 
 @Entity
+@Table(name = "appointments")
 public class Appointment implements Serializable {
 
+    @Serial
+    private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id_app;
-
-    @ManyToOne
-    @JoinColumn(name = "id_user")
-    private Patient patient;
-
-    @ManyToOne
-    @JoinColumn(name = "id_medic")
-    private Medic medic;
-
-    private LocalDate date;
+    @Column(name="speciality")
+    private String speciality;
+    @Column(name="medic")
+    private String medic;
+    @Column(name= "date")
+    private String date;
+    @Column(name= "time")
     private String time;
+    @Column(name= "status")
     private String status;
 
-    // Constructor y getters
+    @Column(name="hospital")
+    private String hospital;
 
     public Appointment() {
-        // Constructor vacío necesario para JPA
     }
 
-    public Appointment(Patient patient, Medic medic, LocalDate date, String time, String status) {
-        this.patient = patient;
+    public Appointment(String speciality, String medic, String date, String time, String status, String hospital) {
+        this.speciality = speciality;
         this.medic = medic;
         this.date = date;
         this.time = time;
         this.status = status;
+        this.hospital = hospital;
     }
-
     public int getId_app() {
         return id_app;
     }
-
-    public LocalDate getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(LocalDate date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
@@ -64,6 +66,29 @@ public class Appointment implements Serializable {
         this.status = status;
     }
 
-    // Los getters y setters para id_user y medic no se proporcionan públicamente
+    public String getSpeciality() {
+        return speciality;
+    }
+
+    public void setSpeciality(String speciality) {
+        this.speciality = speciality;
+    }
+
+    public String getMedic() {
+        return medic;
+    }
+
+    public void setMedic(String medic) {
+        this.medic = medic;
+    }
+
+    public String getHospital() {
+        return hospital;
+    }
+
+    public void setHospital(String hospital) {
+        this.hospital = hospital;
+    }
+// Los getters y setters para id_user y medic no se deberian proporcionar públicamente
     // para limitar el acceso a estos atributos relacionados con otras entidades.
 }

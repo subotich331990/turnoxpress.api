@@ -32,8 +32,6 @@ public class UserService implements UserDetailsService {
         this.userRepository = userRepository;
 
     }
-
-
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         Patient patient = userRepository.findByEmail(email).orElseThrow(

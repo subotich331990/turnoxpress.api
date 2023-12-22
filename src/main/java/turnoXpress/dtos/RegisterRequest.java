@@ -9,6 +9,7 @@ public class RegisterRequest {
     private Role role = Role.USER;
 
     public RegisterRequest() {
+
     }
 
     public RegisterRequest(String email, String name, String password) {
