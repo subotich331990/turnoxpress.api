@@ -43,7 +43,7 @@ public class WebConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable) // deshabilita csrf(cross-site request forgery) que viene por defecto
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/css/**", "/js/**", "/api/v1/login", "/api/v1/register").permitAll()
+                        .requestMatchers("/css/**", "/js/**", "/api/v1/login","/api/v3/appointment","/api/v2/register").permitAll()
                         .requestMatchers("/admin").hasRole(Role.ADMIN.toString())
                      .requestMatchers("/").hasAnyRole(
                               Role.ADMIN.toString(), Role.USER.toString())
